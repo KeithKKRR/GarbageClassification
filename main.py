@@ -21,11 +21,11 @@ val_path = os.path.join(dataset_path, "val.txt")
 test_path = os.path.join(dataset_path, "test.txt")
 batch_size = 16
 max_epoch = 100
-learning_rate = 0.1
+learning_rate = 0.01
 learning_rate_adjust_step = 1
 num_classes = len(GarbageDataset.class_dict.keys())
 model_name = "resnet50"
-train_log_step = 200
+train_log_step = 100
 
 '''
 - datasets
@@ -46,11 +46,11 @@ for param in new_model.parameters():
 
 num_feature = new_model.fc.in_features
 new_model.fc = nn.Sequential(
-    # nn.Linear(num_feature, 256),
-    # nn.ReLU(),
-    # nn.Dropout(0.5),
-    # nn.Linear(256, num_classes),
-    nn.Linear(num_feature, num_classes),
+    nn.Linear(num_feature, 256),
+    nn.ReLU(),
+    nn.Dropout(0.5),
+    nn.Linear(256, num_classes),
+    # nn.Linear(num_feature, num_classes),
     nn.Softmax(dim=1)
 )
 for param in new_model.fc.parameters():
