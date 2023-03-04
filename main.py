@@ -19,9 +19,9 @@ dataset_path = "garbage_classification"
 train_path = os.path.join(dataset_path, "train.txt")
 val_path = os.path.join(dataset_path, "val.txt")
 test_path = os.path.join(dataset_path, "test.txt")
-batch_size = 4
+batch_size = 16
 max_epoch = 100
-learning_rate = 0.01
+learning_rate = 0.1
 learning_rate_adjust_step = 1
 num_classes = len(GarbageDataset.class_dict.keys())
 model_name = "resnet50"
@@ -84,8 +84,10 @@ for epoch in range(max_epoch):
     for index, (img, label) in enumerate(train_loader):
         img, label = img.to(device), label.to(device)
         output = new_model(img)                                         # go through network
+        optim.zero_grad()
         loss = loss_fn(output, label)                                   # calculate loss function
         loss.backward()
+        optim.step()
         _, predicted = torch.max(output, dim=1)                         # predict label according to softmax output
         total += label.size(0)                                        # count total number of data
         correct += (predicted == label).squeeze().cpu().sum().numpy()   # count total number of correct prediction
@@ -113,6 +115,7 @@ for epoch in range(max_epoch):
         epoch+1, max_epoch, total_loss_val, correct_val / total_val))
     total_loss, correct, total = 0, 0, 0
     total_loss_val, correct_val, total_val = 0, 0, 0
+    new_model.train()
 
 
 
