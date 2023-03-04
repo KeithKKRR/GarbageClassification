@@ -40,7 +40,7 @@ test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size)
 '''
 - models
 '''
-new_model = models.resnet50(weights="IMAGENET1K_V2")
+new_model = models.resnet50(pretrained=True)
 for param in new_model.parameters():
     param.requires_grad = False
 
@@ -102,6 +102,7 @@ for epoch in range(max_epoch):
 
     # validation
     total_loss_val, correct_val, total_val = 0, 0, 0
+    new_model.eval()
     with torch.no_grad():
         for index, (img, label) in enumerate(val_loader):
             img, label = img.to(device), label.to(device)
