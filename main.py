@@ -116,9 +116,6 @@ def train_eval_save(pretrained_model, model_name):
                 total_loss_val += loss.item()
         print("Validation:Epoch[{:0>3}/{:0>3}] Loss: {:.4f} Acc:{:.2%}".format(
             epoch + 1, max_epoch, total_loss_val, correct_val / total_val))
-        total_loss, correct, total = 0, 0, 0
-        total_loss_val, correct_val, total_val = 0, 0, 0
-        new_model.train()
 
     torch.save(new_model, "results/" + model_name + ".pt")
     if epoch == max_epoch - 1:
@@ -127,15 +124,19 @@ def train_eval_save(pretrained_model, model_name):
                                                                                                   total_loss_val,
                                                                                                   correct_val / total_val))
 
+    total_loss, correct, total = 0, 0, 0
+    total_loss_val, correct_val, total_val = 0, 0, 0
+    new_model.train()
 
-train_eval_save(models.alexnet(pretrained=True), "alexnet")
-train_eval_save(models.vgg11(pretrained=True), "vgg11")
-train_eval_save(models.vgg13(pretrained=True), "vgg13")
-train_eval_save(models.vgg16(pretrained=True), "vgg16")
-train_eval_save(models.vgg19(pretrained=True), "vgg19")
-train_eval_save(models.resnet18(pretrained=True), "resnet18")
+
+# train_eval_save(models.alexnet(pretrained=True), "alexnet")
+# train_eval_save(models.vgg11(pretrained=True), "vgg11")
+# train_eval_save(models.vgg13(pretrained=True), "vgg13")
+# train_eval_save(models.vgg16(pretrained=True), "vgg16")
+# train_eval_save(models.vgg19(pretrained=True), "vgg19")
+# train_eval_save(models.resnet18(pretrained=True), "resnet18")
 train_eval_save(models.resnet34(pretrained=True), "resnet34")
-train_eval_save(models.resnet50(pretrained=True), "resnet50")
-train_eval_save(models.resnet101(pretrained=True), "resnet101")
-train_eval_save(models.resnet152(pretrained=True), "resnet152")
-train_eval_save(models.vit_b_32(pretrained=True), "vit_b_32")
+# train_eval_save(models.resnet50(pretrained=True), "resnet50")
+# train_eval_save(models.resnet101(pretrained=True), "resnet101")
+# train_eval_save(models.resnet152(pretrained=True), "resnet152")
+# train_eval_save(models.vit_b_32(pretrained=True), "vit_b_32")
